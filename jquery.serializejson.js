@@ -134,9 +134,14 @@
       var keys, nameWithoutType, type, _ref, f;
       f = $.serializeJSON;
       _ref = f.extractTypeFromInputName(name, opts), nameWithoutType = _ref[0], type = _ref[1];
+      
       keys = nameWithoutType.split('['); // split string into array
       keys = $.map(keys, function (key) { return key.replace(/]/g, ''); }); // remove closing brackets
       if (keys[0] === '') { keys.shift(); } // ensure no opening bracket ("[foo][inn]" should be same as "foo[inn]")
+
+      if (opts.useIntKeysAsArrayIndex === false)
+        keys[1] = nameWithoutType;
+
       keys.push(type); // add type at the end
       return keys;
     },
